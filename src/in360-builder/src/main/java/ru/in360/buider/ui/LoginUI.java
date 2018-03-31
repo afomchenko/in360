@@ -68,7 +68,7 @@ public class LoginUI extends UI {
         SecurityContextHolder.getContext().setAuthentication(authenticated);
 
         //redirect to main application
-        getPage().setLocation("");
+        getPage().setLocation("/");
     }
 
 }

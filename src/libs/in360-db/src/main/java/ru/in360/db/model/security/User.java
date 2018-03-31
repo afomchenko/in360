@@ -8,18 +8,20 @@
 
 package ru.in360.db.model.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.Transient;
 import java.util.Collection;
 
 @Entity
@@ -28,18 +30,23 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinTable(name = "userroles",
+            joinColumns = {@JoinColumn(name = "user")},
+            inverseJoinColumns = {@JoinColumn(name = "role")})
     Collection<Role> roles;
-    String password;
+    @Column(name = "username")
     String userName;
+    @Column(name = "password")
+    String password;
+    @Column(name = "nonexpired")
     Boolean accountNonExpired;
+    @Column(name = "nonlocked")
     Boolean accountNonLocked;
+    @Column(name = "credentials_nonexpired")
     Boolean credentialsNonExpired;
+    @Column(name = "enabled")
     Boolean enabled;
-
-    @Autowired
-    @Transient
-    BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -84,7 +91,7 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(CharSequence password, PasswordEncoder passwordEncoder) {
         this.password = passwordEncoder.encode(password);
     }
 

@@ -99,16 +99,70 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="add_intex_to_panorama_in_panoramas_in_tour" author="360@in360.ru" dbms="mysql" runOnChange="true">
+    <changeSet id="add_index_to_panorama_in_panoramas_in_tour" author="360@in360.ru" dbms="mysql" runOnChange="true">
         <addForeignKeyConstraint baseTableName="panoramas_in_tour" baseColumnNames="panorama"
                                  constraintName="panorama_tour_FK"
                                  referencedTableName="panorama" referencedColumnNames="id"/>
     </changeSet>
 
-    <changeSet id="add_intex_to_tour_in_panoramas_in_tour" author="360@in360.ru" dbms="mysql" runOnChange="true">
+    <changeSet id="add_index_to_tour_in_panoramas_in_tour" author="360@in360.ru" dbms="mysql" runOnChange="true">
         <addForeignKeyConstraint baseTableName="panoramas_in_tour" baseColumnNames="tour"
                                  constraintName="tour_panorama_FK"
                                  referencedTableName="tour" referencedColumnNames="id"/>
+    </changeSet>
+
+    <!--security-->
+
+    <changeSet id="create_table_user" author="360@in360.ru" dbms="mysql" runOnChange="true">
+        <createTable tableName="user">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="username" type="VARCHAR(80)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(80)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="nonexpired" type="BIT(1)" />
+            <column name="nonlocked" type="BIT(1)" />
+            <column name="credentials_nonexpired" type="BIT(1)" />
+            <column name="enabled" type="BIT(1)" />
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_table_role" author="360@in360.ru" dbms="mysql" runOnChange="true">
+        <createTable tableName="role">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="authority" type="VARCHAR(80)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_table_userroles" author="360@in360.ru" dbms="mysql" runOnChange="true">
+        <createTable tableName="userroles">
+            <column name="user" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="role" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="add_index_to_user_in_userroles" author="360@in360.ru" dbms="mysql" runOnChange="true">
+        <addForeignKeyConstraint baseTableName="userroles" baseColumnNames="user"
+                                 constraintName="user_role_FK"
+                                 referencedTableName="user" referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="add_index_to_role_in_userroles" author="360@in360.ru" dbms="mysql" runOnChange="true">
+        <addForeignKeyConstraint baseTableName="userroles" baseColumnNames="role"
+                                 constraintName="role_user_FK"
+                                 referencedTableName="role" referencedColumnNames="id"/>
     </changeSet>
 
 </databaseChangeLog>

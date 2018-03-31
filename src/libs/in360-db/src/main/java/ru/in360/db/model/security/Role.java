@@ -10,10 +10,13 @@ package ru.in360.db.model.security;
 
 import org.springframework.security.core.GrantedAuthority;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import java.util.Collection;
 
 @Entity
 public class Role implements GrantedAuthority {
@@ -21,8 +24,11 @@ public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-
+    @Column(name = "authority")
     String authority;
+    @ManyToMany(mappedBy = "roles")
+    private Collection<User> users;
+
 
     @Override
     public String getAuthority() {
