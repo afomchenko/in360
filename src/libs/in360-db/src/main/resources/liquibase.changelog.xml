@@ -1,0 +1,114 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="create_table_image" author="360@in360.ru" dbms="mysql" runOnChange="true">
+        <createTable tableName="image">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="type" type="VARCHAR(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="multires" type="BIT(1)">
+            </column>
+            <column name="tilesize" type="BIGINT">
+            </column>
+            <column name="progressive" type="BIT(1)">
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_table_image_level" author="360@in360.ru" dbms="mysql" runOnChange="true">
+        <createTable tableName="image_level">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="type" type="VARCHAR(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="width" type="BIGINT"/>
+            <column name="height" type="BIGINT"/>
+            <column name="url" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="image_multires" type="BIGINT"/>
+            <column name="image_mobile" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="add_index_to_image_imagelevel_multires.image_id" author="360@in360.ru" dbms="mysql" runOnChange="true">
+        <addForeignKeyConstraint baseTableName="image_level" baseColumnNames="image_multires"
+                                 constraintName="image_multires_FK" referencedTableName="image"
+                                 referencedColumnNames="id" />
+    </changeSet>
+
+    <changeSet id="add_index_to_image_imagelevel_mobile.image_id" author="360@in360.ru" dbms="mysql" runOnChange="true">
+        <addForeignKeyConstraint baseTableName="image_level" baseColumnNames="image_mobile"
+                                 constraintName="image_mobile_FK" referencedTableName="image"
+                                 referencedColumnNames="id" />
+    </changeSet>
+
+    <changeSet id="create_table_tour" author="360@in360.ru" dbms="mysql" runOnChange="true">
+        <createTable tableName="tour">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_table_panorama" author="360@in360.ru" dbms="mysql" runOnChange="true">
+        <createTable tableName="panorama">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR(255)" />
+            <column name="lng" type="DOUBLE" />
+            <column name="lat" type="DOUBLE" />
+            <column name="heading" type="DOUBLE" />
+            <column name="hlookat" type="DOUBLE" />
+            <column name="vlookat" type="DOUBLE" />
+            <column name="fov" type="DOUBLE" />
+            <column name="image" type="BIGINT" />
+            <column name="limitview" type="VARCHAR(40)" />
+            <column name="thumb_url" type="VARCHAR(255)" />
+            <column name="preview_url" type="VARCHAR(255)" />
+            <column name="created_date" type="BIGINT" />
+            <column name="created_user" type="VARCHAR(40)" />
+            <column name="allow_auto_hotspots" type="BIT(1)" />
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_table_panoramas_in_tour" author="360@in360.ru" dbms="mysql" runOnChange="true">
+        <createTable tableName="panoramas_in_tour">
+            <column name="tour" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="panorama" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="add_intex_to_panorama_in_panoramas_in_tour" author="360@in360.ru" dbms="mysql" runOnChange="true">
+        <addForeignKeyConstraint baseTableName="panoramas_in_tour" baseColumnNames="panorama"
+                                 constraintName="panorama_tour_FK"
+                                 referencedTableName="panorama" referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="add_intex_to_tour_in_panoramas_in_tour" author="360@in360.ru" dbms="mysql" runOnChange="true">
+        <addForeignKeyConstraint baseTableName="panoramas_in_tour" baseColumnNames="tour"
+                                 constraintName="tour_panorama_FK"
+                                 referencedTableName="tour" referencedColumnNames="id"/>
+    </changeSet>
+
+</databaseChangeLog>

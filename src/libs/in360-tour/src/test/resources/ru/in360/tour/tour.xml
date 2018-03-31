@@ -1,0 +1,317 @@
+<!--
+  ~ This file is part of in360TourBuilder.
+  ~ This program is free software: you can redistribute it and/or modify
+  ~  it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, version 3.
+  ~ 24.02.18 22:35 Anton Fomchenko 360@in360.ru
+  -->
+
+<krpano version="1.17" title="Virtual Tour" onstart="startup();">
+
+	<include url="skin/vtourskin.xml" />
+
+	<!-- set skin settings: bingmaps? gyro? thumbnail controlling? tooltips? -->
+	<skin_settings bingmaps="true"
+	               bingmaps_key="testkey"
+	               bingmaps_zoombuttons="false"
+	               gyro="true"
+	               thumbs_width="120" thumbs_height="80" thumbs_padding="10" thumbs_crop="0|40|240|160"
+	               thumbs_opened="false"
+	               thumbs_text="true"
+	               thumbs_dragging="true"
+	               thumbs_onhoverscrolling="false"
+	               thumbs_scrollbuttons="false"
+	               thumbs_scrollindicator="false"
+	               thumbs_loop="false"
+	               tooltips_thumbs="false"
+	               tooltips_hotspots="true"
+	               tooltips_mapspots="false"
+	               controlbar_offset="0"
+	               />
+
+	<!-- set optional skin logo url -->
+	<layer name="skin_logo" url="skin/logo.png" scale="1" onclick="openurl(http://in360.ru,_blank);" />
+
+
+	<action name="startup">if(startscene === null, copy(startscene,scene[0].name));loadscene(get(startscene), null, MERGE);</action>
+
+	
+	<scene name="scene_01_-_Colosseo" title="01 - Colosseo" onstart="" thumburl="panos/01_-_Colosseo.tiles/thumb.jpg" lat="41.88933055" lng="12.49134722" heading="0.0">
+
+		<view hlookat="-88.767" vlookat="-3.140" fovtype="MFOV" fov="74.075" maxpixelzoom="1.0" fovmin="50" fovmax="120" limitview="auto" />
+
+		<preview url="panos/01_-_Colosseo.tiles/preview.jpg" />
+
+		<image type="CUBE" multires="true" tilesize="768" progressive="false">
+			<level tiledimagewidth="3072" tiledimageheight="3072">
+				<cube url="panos/01_-_Colosseo.tiles/%s/l3/%v/l3_%s_%v_%h.jpg" />
+			</level>
+			<level tiledimagewidth="1536" tiledimageheight="1536">
+				<cube url="panos/01_-_Colosseo.tiles/%s/l2/%v/l2_%s_%v_%h.jpg" />
+			</level>
+			<level tiledimagewidth="768" tiledimageheight="768">
+				<cube url="panos/01_-_Colosseo.tiles/%s/l1/%v/l1_%s_%v_%h.jpg" />
+			</level>
+			<mobile>
+				<cube url="panos/01_-_Colosseo.tiles/mobile_%s.jpg" />
+			</mobile>
+		</image>
+
+		<!-- place your scene hotspots here -->
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="-112.666" atv="2.869" linkedscene="scene_02_-_colosseo" />
+		<hotspot name="spot2" style="skin_hotspotstyle" ath="-9.194" atv="0.628" linkedscene="scene_03_-_colosseo" />
+
+	</scene>
+
+	<scene name="scene_02_-_Colosseo" title="02 - Colosseo" onstart="" thumburl="panos/02_-_Colosseo.tiles/thumb.jpg" lat="41.89068610" lng="12.49080000" heading="0.0">
+
+		<view hlookat="28.474" vlookat="-19.304" fovtype="MFOV" fov="74.075" maxpixelzoom="1.0" fovmin="50" fovmax="120" limitview="auto" />
+
+		<preview url="panos/02_-_Colosseo.tiles/preview.jpg" />
+
+		<image type="CUBE" multires="true" tilesize="768" progressive="false">
+			<level tiledimagewidth="3072" tiledimageheight="3072">
+				<cube url="panos/02_-_Colosseo.tiles/%s/l3/%v/l3_%s_%v_%h.jpg" />
+			</level>
+			<level tiledimagewidth="1536" tiledimageheight="1536">
+				<cube url="panos/02_-_Colosseo.tiles/%s/l2/%v/l2_%s_%v_%h.jpg" />
+			</level>
+			<level tiledimagewidth="768" tiledimageheight="768">
+				<cube url="panos/02_-_Colosseo.tiles/%s/l1/%v/l1_%s_%v_%h.jpg" />
+			</level>
+			<mobile>
+				<cube url="panos/02_-_Colosseo.tiles/mobile_%s.jpg" />
+			</mobile>
+		</image>
+
+		<!-- place your scene hotspots here -->
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="104.646" atv="-1.310" linkedscene="scene_01_-_colosseo" />
+		<hotspot name="spot2" style="skin_hotspotstyle" ath="-3.037" atv="-0.738" linkedscene="scene_04_-_forum_romanum" />
+
+	</scene>
+
+	<scene name="scene_03_-_Colosseo" title="03 - Colosseo" onstart="" thumburl="panos/03_-_Colosseo.tiles/thumb.jpg" lat="41.88946943" lng="12.49343610" heading="0.0">
+
+		<view hlookat="41.830" vlookat="-11.872" fovtype="MFOV" fov="74.075" maxpixelzoom="1.0" fovmin="50" fovmax="120" limitview="auto" />
+
+		<preview url="panos/03_-_Colosseo.tiles/preview.jpg" />
+
+		<image type="CUBE" multires="true" tilesize="768" progressive="false">
+			<level tiledimagewidth="3072" tiledimageheight="3072">
+				<cube url="panos/03_-_Colosseo.tiles/%s/l3/%v/l3_%s_%v_%h.jpg" />
+			</level>
+			<level tiledimagewidth="1536" tiledimageheight="1536">
+				<cube url="panos/03_-_Colosseo.tiles/%s/l2/%v/l2_%s_%v_%h.jpg" />
+			</level>
+			<level tiledimagewidth="768" tiledimageheight="768">
+				<cube url="panos/03_-_Colosseo.tiles/%s/l1/%v/l1_%s_%v_%h.jpg" />
+			</level>
+			<mobile>
+				<cube url="panos/03_-_Colosseo.tiles/mobile_%s.jpg" />
+			</mobile>
+		</image>
+
+		<!-- place your scene hotspots here -->
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="-39.284" atv="0.365" linkedscene="scene_01_-_colosseo" />
+		<hotspot name="spot2" style="skin_hotspotstyle" ath="-19.012" atv="1.899" linkedscene="scene_02_-_colosseo" />
+		<hotspot name="spot3" style="skin_hotspotstyle" ath="108.321" atv="4.649" linkedscene="scene_04_-_forum_romanum" />
+
+	</scene>
+
+	<scene name="scene_04_-_Forum_Romanum" title="04 - Forum Romanum" onstart="" thumburl="panos/04_-_Forum_Romanum.tiles/thumb.jpg" lat="41.89329722" lng="12.48670000" heading="0.0">
+
+		<view hlookat="-22.189" vlookat="-7.491" fovtype="MFOV" fov="74.075" maxpixelzoom="1.0" fovmin="50" fovmax="120" limitview="auto" />
+
+		<preview url="panos/04_-_Forum_Romanum.tiles/preview.jpg" />
+
+		<image type="CUBE" multires="true" tilesize="768" progressive="false">
+			<level tiledimagewidth="3072" tiledimageheight="3072">
+				<cube url="panos/04_-_Forum_Romanum.tiles/%s/l3/%v/l3_%s_%v_%h.jpg" />
+			</level>
+			<level tiledimagewidth="1536" tiledimageheight="1536">
+				<cube url="panos/04_-_Forum_Romanum.tiles/%s/l2/%v/l2_%s_%v_%h.jpg" />
+			</level>
+			<level tiledimagewidth="768" tiledimageheight="768">
+				<cube url="panos/04_-_Forum_Romanum.tiles/%s/l1/%v/l1_%s_%v_%h.jpg" />
+			</level>
+			<mobile>
+				<cube url="panos/04_-_Forum_Romanum.tiles/mobile_%s.jpg" />
+			</mobile>
+		</image>
+
+		<!-- place your scene hotspots here -->
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="-142.549" atv="-0.369" linkedscene="scene_03_-_colosseo" />
+		<hotspot name="spot2" style="skin_hotspotstyle" ath="57.337" atv="0.372" linkedscene="scene_05_-_piazza_venezia" />
+		<hotspot name="spot3" style="skin_hotspotstyle" ath="37.187" atv="0.657" linkedscene="scene_06_-_piazza_venezia" />
+
+	</scene>
+
+	<scene name="scene_05_-_Piazza_Venezia" title="05 - Piazza Venezia" onstart="" thumburl="panos/05_-_Piazza_Venezia.tiles/thumb.jpg" lat="41.89540555" lng="12.48426388" heading="0.0">
+
+		<view hlookat="49.978" vlookat="-13.946" fovtype="MFOV" fov="74.075" maxpixelzoom="1.0" fovmin="50" fovmax="120" limitview="auto" />
+
+		<preview url="panos/05_-_Piazza_Venezia.tiles/preview.jpg" />
+
+		<image type="CUBE" multires="true" tilesize="768" progressive="false">
+			<level tiledimagewidth="3072" tiledimageheight="3072">
+				<cube url="panos/05_-_Piazza_Venezia.tiles/%s/l3/%v/l3_%s_%v_%h.jpg" />
+			</level>
+			<level tiledimagewidth="1536" tiledimageheight="1536">
+				<cube url="panos/05_-_Piazza_Venezia.tiles/%s/l2/%v/l2_%s_%v_%h.jpg" />
+			</level>
+			<level tiledimagewidth="768" tiledimageheight="768">
+				<cube url="panos/05_-_Piazza_Venezia.tiles/%s/l1/%v/l1_%s_%v_%h.jpg" />
+			</level>
+			<mobile>
+				<cube url="panos/05_-_Piazza_Venezia.tiles/mobile_%s.jpg" />
+			</mobile>
+		</image>
+
+		<!-- place your scene hotspots here -->
+		
+		<hotspot name="spot2" style="skin_hotspotstyle" ath="-29.413" atv="2.439" linkedscene="scene_06_-_piazza_venezia" />
+		<hotspot name="spot3" style="skin_hotspotstyle" ath="0.361" atv="0.860" linkedscene="scene_09_-_trevi" />
+		<hotspot name="spot4" style="skin_hotspotstyle" ath="-161.004" atv="0.362" linkedscene="scene_04_-_forum_romanum" />
+
+	</scene>
+
+	<scene name="scene_06_-_Piazza_Venezia" title="06 - Piazza Venezia" onstart="" thumburl="panos/06_-_Piazza_Venezia.tiles/thumb.jpg" lat="41.89599443" lng="12.48248610" heading="0.0">
+
+		<view hlookat="-0.459" vlookat="-10.263" fovtype="MFOV" fov="74.075" maxpixelzoom="1.0" fovmin="50" fovmax="120" limitview="auto" />
+
+		<preview url="panos/06_-_Piazza_Venezia.tiles/preview.jpg" />
+
+		<image type="CUBE" multires="true" tilesize="768" progressive="false">
+			<level tiledimagewidth="3072" tiledimageheight="3072">
+				<cube url="panos/06_-_Piazza_Venezia.tiles/%s/l3/%v/l3_%s_%v_%h.jpg" />
+			</level>
+			<level tiledimagewidth="1536" tiledimageheight="1536">
+				<cube url="panos/06_-_Piazza_Venezia.tiles/%s/l2/%v/l2_%s_%v_%h.jpg" />
+			</level>
+			<level tiledimagewidth="768" tiledimageheight="768">
+				<cube url="panos/06_-_Piazza_Venezia.tiles/%s/l1/%v/l1_%s_%v_%h.jpg" />
+			</level>
+			<mobile>
+				<cube url="panos/06_-_Piazza_Venezia.tiles/mobile_%s.jpg" />
+			</mobile>
+		</image>
+
+		<!-- place your scene hotspots here -->
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="152.755" atv="1.519" linkedscene="scene_07_-_pantheon" />
+		<hotspot name="spot2" style="skin_hotspotstyle" ath="-153.976" atv="0.789" linkedscene="scene_09_-_trevi" />
+		<hotspot name="spot3" style="skin_hotspotstyle" ath="178.758" atv="0.747" linkedscene="scene_08_-_piazza_di_pietra" />
+		<hotspot name="spot4" style="skin_hotspotstyle" ath="-38.461" atv="-1.430" linkedscene="scene_05_-_piazza_venezia" />
+
+	</scene>
+
+	<scene name="scene_07_-_Pantheon" title="07 - Pantheon" onstart="" thumburl="panos/07_-_Pantheon.tiles/thumb.jpg" lat="41.89948333" lng="12.47661667" heading="0.0">
+
+		<view hlookat="59.292" vlookat="-15.929" fovtype="MFOV" fov="74.075" maxpixelzoom="1.0" fovmin="50" fovmax="120" limitview="auto" />
+
+		<preview url="panos/07_-_Pantheon.tiles/preview.jpg" />
+
+		<image type="CUBE" multires="true" tilesize="768" progressive="false">
+			<level tiledimagewidth="3072" tiledimageheight="3072">
+				<cube url="panos/07_-_Pantheon.tiles/%s/l3/%v/l3_%s_%v_%h.jpg" />
+			</level>
+			<level tiledimagewidth="1536" tiledimageheight="1536">
+				<cube url="panos/07_-_Pantheon.tiles/%s/l2/%v/l2_%s_%v_%h.jpg" />
+			</level>
+			<level tiledimagewidth="768" tiledimageheight="768">
+				<cube url="panos/07_-_Pantheon.tiles/%s/l1/%v/l1_%s_%v_%h.jpg" />
+			</level>
+			<mobile>
+				<cube url="panos/07_-_Pantheon.tiles/mobile_%s.jpg" />
+			</mobile>
+		</image>
+
+		<!-- place your scene hotspots here -->
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="85.892" atv="3.250" linkedscene="scene_06_-_piazza_venezia" />
+		<hotspot name="spot2" style="skin_hotspotstyle" ath="33.234" atv="1.687" linkedscene="scene_08_-_piazza_di_pietra" />
+
+	</scene>
+
+	<scene name="scene_08_-_Piazza_di_Pietra" title="08 - Piazza di Pietra" onstart="" thumburl="panos/08_-_Piazza_di_Pietra.tiles/thumb.jpg" lat="41.90003333" lng="12.47946943" heading="0.0">
+
+		<view hlookat="6.720" vlookat="-26.071" fovtype="MFOV" fov="74.075" maxpixelzoom="1.0" fovmin="50" fovmax="120" limitview="auto" />
+
+		<preview url="panos/08_-_Piazza_di_Pietra.tiles/preview.jpg" />
+
+		<image type="CUBE" multires="true" tilesize="768" progressive="false">
+			<level tiledimagewidth="3072" tiledimageheight="3072">
+				<cube url="panos/08_-_Piazza_di_Pietra.tiles/%s/l3/%v/l3_%s_%v_%h.jpg" />
+			</level>
+			<level tiledimagewidth="1536" tiledimageheight="1536">
+				<cube url="panos/08_-_Piazza_di_Pietra.tiles/%s/l2/%v/l2_%s_%v_%h.jpg" />
+			</level>
+			<level tiledimagewidth="768" tiledimageheight="768">
+				<cube url="panos/08_-_Piazza_di_Pietra.tiles/%s/l1/%v/l1_%s_%v_%h.jpg" />
+			</level>
+			<mobile>
+				<cube url="panos/08_-_Piazza_di_Pietra.tiles/mobile_%s.jpg" />
+			</mobile>
+		</image>
+
+		<!-- place your scene hotspots here -->
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="62.441" atv="0.635" linkedscene="scene_07_-_pantheon" />
+		<hotspot name="spot2" style="skin_hotspotstyle" ath="-87.133" atv="0.811" linkedscene="scene_10_-_piazza_spagna" />
+		
+
+	</scene>
+
+	<scene name="scene_09_-_Trevi" title="09 - Trevi" onstart="" thumburl="panos/09_-_Trevi.tiles/thumb.jpg" lat="41.90084443" lng="12.48336110" heading="0.0">
+
+		<view hlookat="-37.770" vlookat="-18.988" fovtype="MFOV" fov="74.075" maxpixelzoom="1.0" fovmin="50" fovmax="120" limitview="auto" />
+
+		<preview url="panos/09_-_Trevi.tiles/preview.jpg" />
+
+		<image type="CUBE" multires="true" tilesize="768" progressive="false">
+			<level tiledimagewidth="3072" tiledimageheight="3072">
+				<cube url="panos/09_-_Trevi.tiles/%s/l3/%v/l3_%s_%v_%h.jpg" />
+			</level>
+			<level tiledimagewidth="1536" tiledimageheight="1536">
+				<cube url="panos/09_-_Trevi.tiles/%s/l2/%v/l2_%s_%v_%h.jpg" />
+			</level>
+			<level tiledimagewidth="768" tiledimageheight="768">
+				<cube url="panos/09_-_Trevi.tiles/%s/l1/%v/l1_%s_%v_%h.jpg" />
+			</level>
+			<mobile>
+				<cube url="panos/09_-_Trevi.tiles/mobile_%s.jpg" />
+			</mobile>
+		</image>
+
+		<!-- place your scene hotspots here -->
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="5.243" atv="-4.874" linkedscene="scene_10_-_piazza_spagna" />
+		<hotspot name="spot2" style="skin_hotspotstyle" ath="-85.005" atv="-0.266" linkedscene="scene_08_-_piazza_di_pietra" />
+		<hotspot name="spot3" style="skin_hotspotstyle" ath="-138.213" atv="-4.595" linkedscene="scene_07_-_pantheon" />
+
+	</scene>
+
+	<scene name="scene_10_-_Piazza_Spagna" title="10 - Piazza Spagna" onstart="" thumburl="panos/10_-_Piazza_Spagna.tiles/thumb.jpg" lat="41.90579722" lng="12.48230000" heading="0.0">
+
+		<view hlookat="-119.062" vlookat="-22.225" fovtype="MFOV" fov="74.075" maxpixelzoom="1.0" fovmin="50" fovmax="120" limitview="auto" />
+
+		<preview url="panos/10_-_Piazza_Spagna.tiles/preview.jpg" />
+
+		<image type="CUBE" multires="true" tilesize="768" progressive="false">
+			<level tiledimagewidth="3072" tiledimageheight="3072">
+				<cube url="panos/10_-_Piazza_Spagna.tiles/%s/l3/%v/l3_%s_%v_%h.jpg" />
+			</level>
+			<level tiledimagewidth="1536" tiledimageheight="1536">
+				<cube url="panos/10_-_Piazza_Spagna.tiles/%s/l2/%v/l2_%s_%v_%h.jpg" />
+			</level>
+			<level tiledimagewidth="768" tiledimageheight="768">
+				<cube url="panos/10_-_Piazza_Spagna.tiles/%s/l1/%v/l1_%s_%v_%h.jpg" />
+			</level>
+			<mobile>
+				<cube url="panos/10_-_Piazza_Spagna.tiles/mobile_%s.jpg" />
+			</mobile>
+		</image>
+
+		<!-- place your scene hotspots here -->
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="-10.219" atv="-0.990" linkedscene="scene_09_-_trevi" />
+
+	</scene>
+
+
+</krpano>
