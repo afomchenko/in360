@@ -15,11 +15,13 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
@@ -30,12 +32,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 @Theme("valo")
 public class LoginUI extends UI {
 
-    TextField user;
-    PasswordField password;
-    Button loginButton = new Button("Login", this::loginButtonClick);
-
     @Autowired
     DaoAuthenticationProvider daoAuthenticationProvider;
+    private TextField user;
+    private PasswordField password;
+    private VerticalLayout fields;
+    private VerticalLayout errors;
+    private Button loginButton = new Button("Login", this::loginButtonClick);
 
     @Override
     protected void init(VaadinRequest request) {
@@ -48,7 +51,8 @@ public class LoginUI extends UI {
         password.setWidth("300px");
         password.setValue("");
 
-        VerticalLayout fields = new VerticalLayout(user, password, loginButton);
+        errors = new VerticalLayout();
+        fields = new VerticalLayout(user, password, loginButton, errors);
         fields.setCaption("Please login to access the application");
         fields.setSpacing(true);
         fields.setMargin(new MarginInfo(true, true, true, false));
@@ -63,12 +67,16 @@ public class LoginUI extends UI {
     }
 
     public void loginButtonClick(Button.ClickEvent e) {
-        Authentication auth = new UsernamePasswordAuthenticationToken(user.getValue(), password.getValue());
-        Authentication authenticated = daoAuthenticationProvider.authenticate(auth);
-        SecurityContextHolder.getContext().setAuthentication(authenticated);
-
-        //redirect to main application
-        getPage().setLocation("/");
+        errors.removeAllComponents();
+        try {
+            Authentication auth = new UsernamePasswordAuthenticationToken(user.getValue(), password.getValue());
+            Authentication authenticated = daoAuthenticationProvider.authenticate(auth);
+            SecurityContextHolder.getContext().setAuthentication(authenticated);
+            //redirect to main application
+            getPage().setLocation("/");
+        } catch (BadCredentialsException ex) {
+            errors.addComponent(new Label("Wrong username/password"));
+        }
     }
 
 }
