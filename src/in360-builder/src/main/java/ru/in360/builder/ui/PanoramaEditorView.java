@@ -6,7 +6,7 @@
  * 31.03.18 17:16 Anton Fomchenko 360@in360.ru
  */
 
-package ru.in360.buider.ui;
+package ru.in360.builder.ui;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
@@ -16,13 +16,13 @@ import com.vaadin.ui.VerticalLayout;
 
 import javax.annotation.PostConstruct;
 
-@SpringView(name = UploadImageView.VIEW_NAME)
+@SpringView(name = PanoramaEditorView.VIEW_NAME)
 public class PanoramaEditorView extends VerticalLayout implements View {
     public static final String VIEW_NAME = "panoramaedit";
 
     @PostConstruct
     void init() {
-        addComponent(new Label("Welcome to in360 builder!"));
+        addComponent(new Label("Welcome to in360 editor"));
     }
 
     @Override

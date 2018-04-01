@@ -1,4 +1,4 @@
-package ru.in360.buider;
+package ru.in360.builder;
 
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;

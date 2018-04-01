@@ -1,8 +1,7 @@
-package ru.in360.buider;
+package ru.in360.builder;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 public class BuiderApplication {

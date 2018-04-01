@@ -6,13 +6,13 @@
  * 31.03.18 19:09 Anton Fomchenko 360@in360.ru
  */
 
-package ru.in360.buider.init;
+package ru.in360.builder.init;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan(value = {"ru.in360.db", "ru.in360.util", "ru.in360.builder"})
+@ComponentScan(value = {"ru.in360.db", "ru.in360.util", "ru.in360.builder", "ru.in360.builder.ui"})
 public class BuilderConfig {
 
 }

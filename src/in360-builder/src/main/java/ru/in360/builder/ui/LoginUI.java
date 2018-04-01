@@ -6,7 +6,7 @@
  * 18.03.18 22:46 Anton Fomchenko 360@in360.ru
  */
 
-package ru.in360.buider.ui;
+package ru.in360.builder.ui;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;

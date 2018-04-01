@@ -3,10 +3,10 @@
  * This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, version 3.
- * 31.03.18 17:16 Anton Fomchenko 360@in360.ru
+ * 18.03.18 21:41 Anton Fomchenko 360@in360.ru
  */
 
-package ru.in360.buider.ui;
+package ru.in360.builder.ui;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
@@ -16,9 +16,9 @@ import com.vaadin.ui.VerticalLayout;
 
 import javax.annotation.PostConstruct;
 
-@SpringView(name = SettingsView.VIEW_NAME)
-public class SettingsView extends VerticalLayout implements View {
-    public static final String VIEW_NAME = "settings";
+@SpringView(name = DefaultView.VIEW_NAME)
+public class DefaultView extends VerticalLayout implements View {
+    public static final String VIEW_NAME = "";
 
     @PostConstruct
     void init() {

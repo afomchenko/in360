@@ -6,7 +6,7 @@
  * 19.03.18 0:12 Anton Fomchenko 360@in360.ru
  */
 
-package ru.in360.buider.security;
+package ru.in360.builder.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
