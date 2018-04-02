@@ -12,6 +12,7 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewDisplay;
 import com.vaadin.server.VaadinRequest;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.annotation.SpringViewDisplay;
 import com.vaadin.spring.navigator.SpringViewProvider;
@@ -45,6 +46,7 @@ public class MainUI extends UI implements ViewDisplay {
     protected void init(VaadinRequest request) {
         final VerticalLayout root = new VerticalLayout();
         root.setSizeFull();
+        root.setMargin(new MarginInfo(true, false, false, false));
         setContent(root);
 
         final HorizontalLayout navigationBar = new HorizontalLayout();
@@ -56,10 +58,10 @@ public class MainUI extends UI implements ViewDisplay {
         navigationBar.addComponent(btnSettings);
         navigationBar.addComponent(btnEditor);
 
-        navigationBar.setWidth("100%");
-        navigationBar.setComponentAlignment(btnAddNew, Alignment.MIDDLE_RIGHT);
-        navigationBar.setComponentAlignment(btnSettings, Alignment.MIDDLE_RIGHT);
-        navigationBar.setComponentAlignment(btnEditor, Alignment.MIDDLE_LEFT);
+//        navigationBar.setWidth("100%");
+//        navigationBar.setComponentAlignment(btnAddNew, Alignment.MIDDLE_RIGHT);
+//        navigationBar.setComponentAlignment(btnSettings, Alignment.MIDDLE_RIGHT);
+//        navigationBar.setComponentAlignment(btnEditor, Alignment.MIDDLE_RIGHT);
         root.addComponent(navigationBar);
 
         springViewDisplay = new Panel();
@@ -70,7 +72,7 @@ public class MainUI extends UI implements ViewDisplay {
 
     private Button createNavigationButton(String caption, final String viewName) {
         Button button = new Button(caption);
-        button.addStyleName(ValoTheme.BUTTON_BORDERLESS);
+        button.addStyleName(ValoTheme.BUTTON_LINK);
         button.addClickListener(event -> getUI().getNavigator().navigateTo(viewName));
         return button;
     }
