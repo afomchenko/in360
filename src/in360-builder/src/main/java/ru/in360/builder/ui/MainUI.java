@@ -20,7 +20,6 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
@@ -34,7 +33,7 @@ public class MainUI extends UI implements ViewDisplay {
 
     private final SpringViewProvider viewProvider;
 
-    private Panel springViewDisplay;
+    private VerticalLayout springViewDisplay;
 
     @Autowired
     public MainUI(SpringViewProvider viewProvider) {
@@ -51,28 +50,33 @@ public class MainUI extends UI implements ViewDisplay {
 
         final HorizontalLayout navigationBar = new HorizontalLayout();
         navigationBar.addStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
+        navigationBar.setMargin(new MarginInfo(false, true, false, true));
         Button btnAddNew = createNavigationButton("Add new panorama", UploadImageView.VIEW_NAME);
         Button btnSettings = createNavigationButton("Settings", SettingsView.VIEW_NAME);
         Button btnEditor = createNavigationButton("Panorama editor", PanoramaEditorView.VIEW_NAME);
-        navigationBar.addComponent(btnAddNew);
-        navigationBar.addComponent(btnSettings);
-        navigationBar.addComponent(btnEditor);
+        VerticalLayout spacer = new VerticalLayout();
+        spacer.setWidth(100.0f, Unit.PERCENTAGE);
+        spacer.setHeightUndefined();
+        navigationBar.addComponent(spacer);
+        HorizontalLayout horizontalLayout = new HorizontalLayout(btnAddNew, btnSettings, btnEditor);
+        navigationBar.addComponent(horizontalLayout);
 
-//        navigationBar.setWidth("100%");
-//        navigationBar.setComponentAlignment(btnAddNew, Alignment.MIDDLE_RIGHT);
-//        navigationBar.setComponentAlignment(btnSettings, Alignment.MIDDLE_RIGHT);
-//        navigationBar.setComponentAlignment(btnEditor, Alignment.MIDDLE_RIGHT);
+        navigationBar.setWidth(100.0f, Unit.PERCENTAGE);
+        navigationBar.setComponentAlignment(spacer, Alignment.MIDDLE_LEFT);
+        navigationBar.setComponentAlignment(horizontalLayout, Alignment.MIDDLE_RIGHT);
         root.addComponent(navigationBar);
 
-        springViewDisplay = new Panel();
+        springViewDisplay = new VerticalLayout();
         springViewDisplay.setSizeFull();
+        springViewDisplay.setMargin(false);
+        springViewDisplay.setStyleName(ValoTheme.LAYOUT_WELL);
         root.addComponent(springViewDisplay);
         root.setExpandRatio(springViewDisplay, 1.0f);
     }
 
     private Button createNavigationButton(String caption, final String viewName) {
         Button button = new Button(caption);
-        button.addStyleName(ValoTheme.BUTTON_LINK);
+        button.addStyleName(ValoTheme.BUTTON_BORDERLESS);
         button.addClickListener(event -> getUI().getNavigator().navigateTo(viewName));
         return button;
     }
@@ -80,7 +84,8 @@ public class MainUI extends UI implements ViewDisplay {
     @Override
     public void showView(View view) {
         if (springViewDisplay != null) {
-            springViewDisplay.setContent((Component) view);
+            springViewDisplay.removeAllComponents();
+            springViewDisplay.addComponent((Component) view);
         }
     }
 }
