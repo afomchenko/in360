@@ -15,6 +15,7 @@ import com.vaadin.spring.navigator.SpringViewProvider;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.ListSelect;
+import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class DefaultView extends HorizontalLayout implements View {
         leftPanel.setStyleName("Metro");
         leftPanel.setHeight(100.0f, Unit.PERCENTAGE);
         leftPanel.setWidth(300, Unit.PIXELS);
-        leftPanel.addComponent(addListselect());
+        leftPanel.addComponent(addSelect());
         this.addComponent(leftPanel);
         rightPanel = new VerticalLayout();
 
@@ -55,12 +56,13 @@ public class DefaultView extends HorizontalLayout implements View {
 
     }
 
-    public ListSelect<String> addListselect() {
-        List<String> data = IntStream.range(0, 6).mapToObj(i -> "Panorama " + i).collect(Collectors.toList());
+    public NativeSelect<String> addSelect() {
+        List<String> data = IntStream.range(0, 100).mapToObj(i -> "Panorama " + i).collect(Collectors.toList());
 
-        ListSelect<String> panoramaList = new ListSelect<>("Select an option", data);
-        panoramaList.setRows(6);
-        panoramaList.select(data.get(2));
+        NativeSelect<String> panoramaList = new NativeSelect<>("Select an option", data);
+        panoramaList.setVisibleItemCount(data.size());
+        panoramaList.setEmptySelectionAllowed(false);
+        panoramaList.setSelectedItem(data.get(0));
         panoramaList.setWidth(100.0f, Unit.PERCENTAGE);
         panoramaList.setHeight(100.0f, Unit.PERCENTAGE);
         panoramaList.addStyleName(ValoTheme.TABLE_BORDERLESS);
