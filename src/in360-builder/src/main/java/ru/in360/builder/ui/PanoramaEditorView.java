@@ -19,10 +19,16 @@ import javax.annotation.PostConstruct;
 @SpringView(name = PanoramaEditorView.VIEW_NAME)
 public class PanoramaEditorView extends VerticalLayout implements View {
     public static final String VIEW_NAME = "panoramaedit";
+    private String panoramaName;
 
     @PostConstruct
     void init() {
         addComponent(new Label("Welcome to in360 editor"));
+    }
+
+    public void loadPanoramaContent(String panoramaName) {
+        this.panoramaName = panoramaName;
+        addComponent(new Label("Selected " + this.panoramaName));
     }
 
     @Override

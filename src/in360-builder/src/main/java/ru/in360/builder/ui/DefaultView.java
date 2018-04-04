@@ -14,7 +14,6 @@ import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.navigator.SpringViewProvider;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.ListSelect;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
@@ -44,7 +43,7 @@ public class DefaultView extends HorizontalLayout implements View {
         leftPanel = new VerticalLayout();
         leftPanel.setStyleName("Metro");
         leftPanel.setHeight(100.0f, Unit.PERCENTAGE);
-        leftPanel.setWidth(300, Unit.PIXELS);
+        leftPanel.setWidth(200, Unit.POINTS);
         leftPanel.addComponent(addSelect());
         this.addComponent(leftPanel);
         rightPanel = new VerticalLayout();
@@ -68,8 +67,10 @@ public class DefaultView extends HorizontalLayout implements View {
         panoramaList.addStyleName(ValoTheme.TABLE_BORDERLESS);
 
         panoramaList.addValueChangeListener(event -> {
+            PanoramaEditorView panoramaEditorView = (PanoramaEditorView) viewProvider.getView(PanoramaEditorView.VIEW_NAME);
             this.rightPanel.removeAllComponents();
-            this.rightPanel.addComponent((Component) viewProvider.getView(PanoramaEditorView.VIEW_NAME));
+            this.rightPanel.addComponent(panoramaEditorView);
+            panoramaEditorView.loadPanoramaContent(event.getValue());
         });
         return panoramaList;
     }
