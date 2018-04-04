@@ -28,7 +28,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 @SpringUI(path = "/login")
-@Title("LoginPage")
+@Title("in360 tour builder login")
 @Theme("valo")
 public class LoginUI extends UI {
 

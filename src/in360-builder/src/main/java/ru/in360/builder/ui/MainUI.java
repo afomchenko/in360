@@ -9,6 +9,7 @@
 package ru.in360.builder.ui;
 
 import com.vaadin.annotations.Theme;
+import com.vaadin.annotations.Title;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewDisplay;
 import com.vaadin.server.VaadinRequest;
@@ -28,6 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @Theme("valo")
 @SpringUI
+@Title("in360 tour builder")
 @SpringViewDisplay
 public class MainUI extends UI implements ViewDisplay {
 
