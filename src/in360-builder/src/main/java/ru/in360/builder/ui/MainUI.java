@@ -22,6 +22,7 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -29,7 +30,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 @SpringUI
 @SpringViewDisplay
 public class MainUI extends UI implements ViewDisplay {
-
 
     private final SpringViewProvider viewProvider;
 
@@ -39,7 +39,6 @@ public class MainUI extends UI implements ViewDisplay {
     public MainUI(SpringViewProvider viewProvider) {
         this.viewProvider = viewProvider;
     }
-
 
     @Override
     protected void init(VaadinRequest request) {
@@ -51,8 +50,8 @@ public class MainUI extends UI implements ViewDisplay {
         final HorizontalLayout navigationBar = new HorizontalLayout();
         navigationBar.addStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
         navigationBar.setMargin(new MarginInfo(false, true, false, true));
-        Button btnAddNew = createNavigationButton("Add new panorama", UploadImageView.VIEW_NAME);
-        Button btnSettings = createNavigationButton("Settings", SettingsView.VIEW_NAME);
+        Button btnAddNew = createPopupViewButton("Add new panorama", UploadImageView.VIEW_NAME);
+        Button btnSettings = createPopupViewButton("Settings", SettingsView.VIEW_NAME);
         Button btnEditor = createNavigationButton("Panorama editor", PanoramaEditorView.VIEW_NAME);
         VerticalLayout spacer = new VerticalLayout();
         spacer.setWidth(100.0f, Unit.PERCENTAGE);
@@ -79,6 +78,25 @@ public class MainUI extends UI implements ViewDisplay {
         button.addStyleName(ValoTheme.BUTTON_BORDERLESS);
         button.addClickListener(event -> getUI().getNavigator().navigateTo(viewName));
         return button;
+    }
+
+    private Button createPopupViewButton(String caption, final String viewName) {
+        Button button = new Button(caption);
+        button.addStyleName(ValoTheme.BUTTON_BORDERLESS);
+        button.addClickListener(event -> createPopupView(caption, viewName));
+        return button;
+    }
+
+    private void createPopupView(String caption, final String viewName) {
+        View view = viewProvider.getView(viewName);
+        final Window window = new Window(caption);
+        if (view instanceof PopupWindow) {
+            ((PopupWindow) view).isPopupWindowModal().ifPresent(window::setModal);
+            ((PopupWindow) view).isPopupWindowCentered().ifPresent(e -> window.center());
+            ((PopupWindow) view).isPopupWindowResizable().ifPresent(window::setResizable);
+        }
+        window.setContent((Component) view);
+        this.getUI().getUI().addWindow(window);
     }
 
     @Override

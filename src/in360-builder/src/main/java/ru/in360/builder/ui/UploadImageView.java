@@ -20,7 +20,7 @@ import com.vaadin.ui.VerticalLayout;
 import javax.annotation.PostConstruct;
 
 @SpringView(name = UploadImageView.VIEW_NAME)
-public class UploadImageView extends VerticalLayout implements View {
+public class UploadImageView extends VerticalLayout implements View, PopupWindow {
     public static final String VIEW_NAME = "uploadimage";
 
     Button uploadButton = new Button("Upload", this::uploadButtonClick);
@@ -35,13 +35,13 @@ public class UploadImageView extends VerticalLayout implements View {
         fields.setMargin(new MarginInfo(true, true, true, false));
         fields.setSizeUndefined();
         this.addComponent(fields);
-        this.setSizeFull();
+        this.setWidth(300, Unit.POINTS);
+        this.setHeight(300, Unit.POINTS);
         this.setComponentAlignment(fields, Alignment.MIDDLE_CENTER);
     }
 
     public void uploadButtonClick(Button.ClickEvent e) {
-        //redirect to main application
-        this.getUI().getPage().setLocation("/");
+        // do nothing
     }
 
     @Override

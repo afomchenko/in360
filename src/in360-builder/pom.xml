@@ -15,7 +15,6 @@
     <artifactId>builder</artifactId>
 
     <properties>
-
         <vaadin.version>8.3.1</vaadin.version>
     </properties>
 

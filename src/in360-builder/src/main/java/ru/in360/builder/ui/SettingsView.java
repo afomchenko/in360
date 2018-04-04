@@ -17,7 +17,7 @@ import com.vaadin.ui.VerticalLayout;
 import javax.annotation.PostConstruct;
 
 @SpringView(name = SettingsView.VIEW_NAME)
-public class SettingsView extends VerticalLayout implements View {
+public class SettingsView extends VerticalLayout implements View, PopupWindow {
     public static final String VIEW_NAME = "settings";
 
     @PostConstruct
