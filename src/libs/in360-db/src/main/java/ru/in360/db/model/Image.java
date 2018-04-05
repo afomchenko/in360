@@ -63,6 +63,12 @@ public class Image {
     @PrimaryKeyJoinColumn
     private Panorama panorama;
 
+    @Column(name = "sourceimage")
+    private String sourceImagePath;
+
+    @Column(name = "complete")
+    private Boolean complete;
+
     public long getId() {
         return id;
     }
@@ -127,5 +133,21 @@ public class Image {
 
     public void setPanorama(Panorama panorama) {
         this.panorama = panorama;
+    }
+
+    public String getSourceImagePath() {
+        return sourceImagePath;
+    }
+
+    public void setSourceImagePath(String sourceImagePath) {
+        this.sourceImagePath = sourceImagePath;
+    }
+
+    public Boolean isComplete() {
+        return complete;
+    }
+
+    public void setComplete(Boolean complete) {
+        this.complete = complete;
     }
 }

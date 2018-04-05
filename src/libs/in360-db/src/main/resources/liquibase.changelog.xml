@@ -19,6 +19,10 @@
             </column>
             <column name="progressive" type="BIT(1)">
             </column>
+            <column name="sourceimage" type="VARCHAR(255)">
+            </column>
+            <column name="complete" type="BIT(1)">
+            </column>
         </createTable>
     </changeSet>
 
