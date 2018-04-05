@@ -169,4 +169,60 @@
                                  referencedTableName="role" referencedColumnNames="id"/>
     </changeSet>
 
+    <changeSet id="create_default_roles" author="360@in360.ru" dbms="mysql" runOnChange="true">
+        <insert tableName="role">
+            <column name="id" value="1"/>
+            <column name="authority" value="admin"/>
+        </insert>
+        <insert tableName="role">
+            <column name="id" value="2"/>
+            <column name="authority" value="user"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="create_default_users" author="360@in360.ru" dbms="mysql" runOnChange="true">
+        <insert tableName="user">
+            <column name="id" value="1"/>
+            <column name="username" value="root"/>
+            <column name="password" value="$2a$10$OF49soxjmz7K8ZAcqbjv4.yMFuB5gq7aiR0MonHskkr.MupEAg8FW"/> <!-- root -->
+            <column name="nonexpired" valueBoolean="true" />
+            <column name="nonlocked" valueBoolean="true" />
+            <column name="credentials_nonexpired" valueBoolean="true" />
+            <column name="enabled" valueBoolean="true" />
+        </insert>
+        <insert tableName="user">
+            <column name="id" value="2"/>
+            <column name="username" value="user1"/>
+            <column name="password" value="$2a$10$LQiOJsAv8x8Xva19sIEixOUo4UmfmkKHfkOW3B1I9gW7/O9kq8FgK"/> <!-- user1 -->
+            <column name="nonexpired" valueBoolean="true" />
+            <column name="nonlocked" valueBoolean="true" />
+            <column name="credentials_nonexpired" valueBoolean="true" />
+            <column name="enabled" valueBoolean="true" />
+        </insert>
+        <insert tableName="user">
+            <column name="id" value="3"/>
+            <column name="username" value="user2"/>
+            <column name="password" value="$2a$10$t3kt4RhSVtOWvhQALSnqweFnlaYGv/bddS7GWfOVwvyWKNNH5Cv3q"/> <!-- user2 -->
+            <column name="nonexpired" valueBoolean="true" />
+            <column name="nonlocked" valueBoolean="true" />
+            <column name="credentials_nonexpired" valueBoolean="true" />
+            <column name="enabled" valueBoolean="true" />
+        </insert>
+    </changeSet>
+
+    <changeSet id="create_default_userroles" author="360@in360.ru" dbms="mysql" runOnChange="true">
+        <insert tableName="userroles">
+            <column name="user" value="1"/>
+            <column name="role" value="1"/>
+        </insert>
+        <insert tableName="userroles">
+            <column name="user" value="2"/>
+            <column name="role" value="2"/>
+        </insert>
+        <insert tableName="userroles">
+            <column name="user" value="3"/>
+            <column name="role" value="2"/>
+        </insert>
+    </changeSet>
+    
 </databaseChangeLog>
