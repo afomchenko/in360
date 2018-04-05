@@ -13,12 +13,14 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 
 import javax.annotation.PostConstruct;
 
 @SpringView(name = SettingsView.VIEW_NAME)
-public class SettingsView extends VerticalLayout implements View, PopupWindow {
+public class SettingsView extends VerticalLayout implements PopupWindowView {
     public static final String VIEW_NAME = "settings";
+    private Window window;
 
     @PostConstruct
     void init() {
@@ -28,5 +30,10 @@ public class SettingsView extends VerticalLayout implements View, PopupWindow {
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         // This view is constructed in the init() method()
+    }
+
+    @Override
+    public void setParentWindow(Window window) {
+        this.window = window;
     }
 }

@@ -8,9 +8,12 @@
 
 package ru.in360.builder.ui;
 
+import com.vaadin.navigator.View;
+import com.vaadin.ui.Window;
+
 import java.util.Optional;
 
-public interface PopupWindow {
+public interface PopupWindowView extends View{
 
 //    Optional<Float> getPopupWindowHeight();
 
@@ -27,4 +30,6 @@ public interface PopupWindow {
     default Optional<Boolean> isPopupWindowResizable() {
         return Optional.of(false);
     }
+
+    void setParentWindow(Window window);
 }

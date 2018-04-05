@@ -92,10 +92,11 @@ public class MainUI extends UI implements ViewDisplay {
     private void createPopupView(String caption, final String viewName) {
         View view = viewProvider.getView(viewName);
         final Window window = new Window(caption);
-        if (view instanceof PopupWindow) {
-            ((PopupWindow) view).isPopupWindowModal().ifPresent(window::setModal);
-            ((PopupWindow) view).isPopupWindowCentered().ifPresent(e -> window.center());
-            ((PopupWindow) view).isPopupWindowResizable().ifPresent(window::setResizable);
+        if (view instanceof PopupWindowView) {
+            ((PopupWindowView) view).isPopupWindowModal().ifPresent(window::setModal);
+            ((PopupWindowView) view).isPopupWindowCentered().ifPresent(e -> window.center());
+            ((PopupWindowView) view).isPopupWindowResizable().ifPresent(window::setResizable);
+            ((PopupWindowView) view).setParentWindow(window);
         }
         window.setContent((Component) view);
         this.getUI().getUI().addWindow(window);
