@@ -8,8 +8,8 @@
 
 package ru.in360.builder.ui;
 
-import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -21,6 +21,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.Upload;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
+import com.vaadin.ui.themes.ValoTheme;
 
 import javax.annotation.PostConstruct;
 import java.io.OutputStream;
@@ -33,13 +34,25 @@ public class UploadImageView extends VerticalLayout implements PopupWindowView {
 
     @PostConstruct
     public void init() {
-        setSizeFull();
+        VerticalLayout uploadLayout = new VerticalLayout();
         Upload upload = getUpload();
-        this.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
-        this.setWidth(300, Unit.POINTS);
-        this.setHeight(100, Unit.POINTS);
-        this.addComponent(new Label("Upload a panoramic image in equidistant projection"));
-        this.addComponent(upload);
+        this.setDefaultComponentAlignment(Alignment.TOP_CENTER);
+        uploadLayout.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
+        uploadLayout.addComponent(new Label("Upload a panoramic image in equidistant projection"));
+        uploadLayout.addComponent(upload);
+        uploadLayout.setMargin(false);
+        VerticalLayout descriptionLayout = new VerticalLayout();
+        Label description = new Label("Technical Requirements:  JPEG or 8-bit TIFF format with no layers. Your panoramas must be 360º - <br />" +
+                "the left side of your panorama must match with the right side of your panorama so the viewer can <br />" +
+                "enjoy a fully immersive experience of looking all around without any visible seams. To upload a fully <br />" +
+                "spherical panorama, make sure the aspect ratio of your panorama in pixel width and height is 2:1. <br />" +
+                "Example sizes of panoramas that will be treated as spherical: 6000x3000, 10000x5000, 12288x6144.");
+        description.setContentMode(ContentMode.HTML);
+        description.setStyleName(ValoTheme.LABEL_SMALL);
+        descriptionLayout.addComponent(description);
+        descriptionLayout.setMargin(false);
+        this.addComponent(uploadLayout);
+        this.addComponent(descriptionLayout);
     }
 
     public void uploadButtonClick(Button.ClickEvent e) {
