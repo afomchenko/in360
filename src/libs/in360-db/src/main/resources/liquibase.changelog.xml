@@ -224,5 +224,16 @@
             <column name="role" value="2"/>
         </insert>
     </changeSet>
-    
+
+    <changeSet id="create_table_system_params" author="360@in360.ru" dbms="mysql" runOnChange="true">
+        <createTable tableName="system_params">
+            <column name="param_key" type="VARCHAR(80)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="param_value" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
 </databaseChangeLog>
