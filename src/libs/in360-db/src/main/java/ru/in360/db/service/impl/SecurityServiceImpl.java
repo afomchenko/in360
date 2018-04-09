@@ -11,6 +11,7 @@ package ru.in360.db.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.in360.db.model.security.Role;
 import ru.in360.db.model.security.User;
 import ru.in360.db.repo.RoleRepo;
@@ -36,16 +37,19 @@ public class SecurityServiceImpl implements SecurityService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<User> findUser(String name) {
         return userRepo.findUserByUserName(name);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Role> findRole(String authority) {
         return roleRepo.findRoleByAuthority(authority);
     }
 
     @Override
+    @Transactional
     public User newUser(String name, CharSequence password, Role... roles) {
         User user = new User();
         user.setUserName(name);
@@ -59,6 +63,7 @@ public class SecurityServiceImpl implements SecurityService {
     }
 
     @Override
+    @Transactional
     public Role newRole(String authority) {
         Role role = new Role();
         role.setAuthority(authority);
