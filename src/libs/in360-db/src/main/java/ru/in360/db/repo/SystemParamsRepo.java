@@ -9,13 +9,17 @@
 package ru.in360.db.repo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.in360.db.model.params.SystemParams;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface SystemParamsRepo extends JpaRepository<SystemParams, String> {
 
-    Optional<SystemParams> findByParamKey(String paramKey);
+    List<SystemParams> findAll();
+
+    Optional<SystemParams> findByParamKey(@Param("paramKey") String paramKey);
 }

@@ -13,4 +13,6 @@ import java.util.Optional;
 public interface SystemParamsService {
 
     Optional<String> getParam(String paramKey);
+
+    void setParameter(String paramKey, String value);
 }
