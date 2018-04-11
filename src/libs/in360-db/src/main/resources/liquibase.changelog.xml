@@ -236,4 +236,31 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="create_default_props" author="360@in360.ru" dbms="mysql" runOnChange="true">
+        <insert tableName="system_params">
+            <column name="param_key" value="image.processor.raw.image.directory"/>
+            <column name="param_value" value="temp/"/>
+        </insert>
+        <insert tableName="system_params">
+            <column name="param_key" value="image.processor.use.sftp"/>
+            <column name="param_value" value="false"/>
+        </insert>
+        <insert tableName="system_params">
+            <column name="param_key" value="sftp.host"/>
+            <column name="param_value" value="192.168.99.100"/>
+        </insert>
+        <insert tableName="system_params">
+            <column name="param_key" value="sftp.port"/>
+            <column name="param_value" value="2222"/>
+        </insert>
+        <insert tableName="system_params">
+            <column name="param_key" value="sftp.login"/>
+            <column name="param_value" value="login"/>
+        </insert>
+        <insert tableName="system_params">
+            <column name="param_key" value="sftp.password"/>
+            <column name="param_value" value="password"/>
+        </insert>
+    </changeSet>
+
 </databaseChangeLog>
