@@ -22,15 +22,26 @@ import com.vaadin.ui.Upload;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
+import org.springframework.beans.factory.annotation.Autowired;
+import ru.in360.db.config.SystemParamKeys;
+import ru.in360.db.service.SystemParamsService;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.OutputStream;
 
 @SpringView(name = UploadImageView.VIEW_NAME)
 public class UploadImageView extends VerticalLayout implements PopupWindowView {
     public static final String VIEW_NAME = "uploadimage";
-
+    private final SystemParamsService systemParamsService;
     private Window parentWindow;
+
+    @Autowired
+    public UploadImageView(SystemParamsService systemParamsService) {
+        this.systemParamsService = systemParamsService;
+    }
 
     @PostConstruct
     public void init() {
@@ -55,10 +66,6 @@ public class UploadImageView extends VerticalLayout implements PopupWindowView {
         this.addComponent(descriptionLayout);
     }
 
-    public void uploadButtonClick(Button.ClickEvent e) {
-        // do nothing
-    }
-
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         // This view is constructed in the init() method()
@@ -70,12 +77,11 @@ public class UploadImageView extends VerticalLayout implements PopupWindowView {
     }
 
     private Upload getUpload() {
-        ImageUploadReciever reciever = new ImageUploadReciever();
-        reciever.setSlow(true);
-        Upload upload = new Upload(null, reciever);
+        Upload.Receiver receiver = new ImageUploadReceiver(systemParamsService);
+        Upload upload = new Upload(null, receiver);
         upload.setImmediateMode(true);
         upload.setButtonCaption("Select and upload file");
-        UploadInfoWindow uploadInfoWindow = new UploadInfoWindow(upload, reciever);
+        UploadInfoWindow uploadInfoWindow = new UploadInfoWindow(upload, receiver);
 
         upload.addStartedListener(event -> {
             if (uploadInfoWindow.getParent() == null) {
@@ -88,41 +94,33 @@ public class UploadImageView extends VerticalLayout implements PopupWindowView {
         return upload;
     }
 
-    private static class ImageUploadReciever implements Upload.Receiver {
-        private int counter;
-        private int total;
-        private boolean sleep;
+    private static class ImageUploadReceiver implements Upload.Receiver {
+        private final SystemParamsService systemParamsService;
+
+        private ImageUploadReceiver(SystemParamsService systemParamsService) {
+            this.systemParamsService = systemParamsService;
+        }
 
         @Override
         public OutputStream receiveUpload(final String filename, final String MIMEType) {
-            counter = 0;
-            total = 0;
-            return new OutputStream() {
-                private static final int searchedByte = '\n';
+            if (!systemParamsService.getParam(SystemParamKeys.IMAGE_PROCESSOR_USE_SFTP.getKey()).map(Boolean::valueOf).orElse(false)) {
+                return getLocalFileOutputStream(filename);
+            } else {
+                return null;
+            }
+        }
 
-                @Override
-                public void write(final int b) {
-                    total++;
-                    if (b == searchedByte) {
-                        counter++;
-                    }
-                    if (sleep && total % 1000 == 0) {
+        private OutputStream getLocalFileOutputStream(String filename) {
+            return systemParamsService.getParam(SystemParamKeys.IMAGE_PROCESSOR_RAW_IMAGE_DIRECTORY.getKey())
+                    .map(uploadPath -> {
+                        File file = new File(uploadPath + filename);
                         try {
-                            Thread.sleep(100);
-                        } catch (final InterruptedException e) {
-                            e.printStackTrace();
+                            return new FileOutputStream(file);
+                        } catch (FileNotFoundException e) {
+                            throw new IllegalStateException("upload failed");
                         }
-                    }
-                }
-            };
-        }
-
-        private int getLineBreakCount() {
-            return counter;
-        }
-
-        private void setSlow(boolean value) {
-            sleep = value;
+                    })
+                    .orElseThrow(() -> new IllegalStateException("upload failed"));
         }
     }
 
@@ -131,17 +129,16 @@ public class UploadImageView extends VerticalLayout implements PopupWindowView {
             Upload.FailedListener, Upload.SucceededListener,
             Upload.FinishedListener {
         private final Label state = new Label();
-        private final Label result = new Label();
         private final Label fileName = new Label();
         private final Label textualProgress = new Label();
 
         private final ProgressBar progressBar = new ProgressBar();
         private final Button cancelButton;
-        private final ImageUploadReciever reciever;
+        private final Upload.Receiver receiver;
 
-        private UploadInfoWindow(final Upload upload, final ImageUploadReciever reciever) {
+        private UploadInfoWindow(final Upload upload, final Upload.Receiver receiver) {
             super("Status");
-            this.reciever = reciever;
+            this.receiver = receiver;
 
             setResizable(false);
             setDraggable(false);
@@ -169,9 +166,6 @@ public class UploadImageView extends VerticalLayout implements PopupWindowView {
 
             fileName.setCaption("File name");
             uploadInfoLayout.addComponent(fileName);
-
-            result.setCaption("Line breaks counted");
-            uploadInfoLayout.addComponent(result);
 
             progressBar.setCaption("Progress");
             progressBar.setVisible(false);
@@ -208,24 +202,18 @@ public class UploadImageView extends VerticalLayout implements PopupWindowView {
 
         @Override
         public void updateProgress(final long readBytes, final long contentLength) {
-            // this method gets called several times during the update
             progressBar.setValue(readBytes / (float) contentLength);
             textualProgress.setValue("Processed " + readBytes + " bytes of " + contentLength);
-            result.setValue(reciever.getLineBreakCount() + " (counting...)");
         }
 
         @Override
         public void uploadSucceeded(final Upload.SucceededEvent event) {
             state.setValue("Upload finished");
-            result.setValue(reciever.getLineBreakCount() + " (total)");
         }
 
         @Override
         public void uploadFailed(final Upload.FailedEvent event) {
             state.setValue("Upload cancelled");
-            result.setValue(reciever.getLineBreakCount()
-                    + " (counting interrupted at "
-                    + Math.round(100 * progressBar.getValue()) + "%)");
         }
     }
 }
