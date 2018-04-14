@@ -34,7 +34,7 @@ public class XMLUtil {
     }
 
     public static XMLStreamReader getAsXMLStream(InputStream stream) throws XMLStreamException {
-        XMLInputFactory xif = XMLInputFactory.newFactory();
+        XMLInputFactory xif = XMLInputFactory.newInstance();
         XMLStreamReader xsr = xif.createXMLStreamReader(stream);
         return xif.createFilteredReader(xsr, reader -> reader.getEventType() != XMLStreamReader.CHARACTERS || reader.getText().trim().length() > 0);
     }
