@@ -28,6 +28,8 @@ public interface PanoramaService {
 
     Optional<Tour> findTourByName(String name);
 
+    Panorama newPanorama(String sourceImagePath);
+
     Panorama savePanorama(Panorama panorama);
 
     Tour createTour(String name, List<Panorama> panoramas);

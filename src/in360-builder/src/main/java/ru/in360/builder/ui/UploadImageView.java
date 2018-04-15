@@ -24,6 +24,7 @@ import com.vaadin.ui.Window;
 import com.vaadin.ui.themes.ValoTheme;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.in360.db.config.SystemParamKeys;
+import ru.in360.db.service.PanoramaService;
 import ru.in360.db.service.SystemParamsService;
 
 import javax.annotation.PostConstruct;
@@ -36,11 +37,13 @@ import java.io.OutputStream;
 public class UploadImageView extends VerticalLayout implements PopupWindowView {
     public static final String VIEW_NAME = "uploadimage";
     private final SystemParamsService systemParamsService;
+    private final PanoramaService panoramaService;
     private Window parentWindow;
 
     @Autowired
-    public UploadImageView(SystemParamsService systemParamsService) {
+    public UploadImageView(SystemParamsService systemParamsService, PanoramaService panoramaService) {
         this.systemParamsService = systemParamsService;
+        this.panoramaService = panoramaService;
     }
 
     @PostConstruct
@@ -77,7 +80,7 @@ public class UploadImageView extends VerticalLayout implements PopupWindowView {
     }
 
     private Upload getUpload() {
-        Upload.Receiver receiver = new ImageUploadReceiver(systemParamsService);
+        Upload.Receiver receiver = new ImageUploadReceiver(panoramaService, systemParamsService);
         Upload upload = new Upload(null, receiver);
         upload.setImmediateMode(true);
         upload.setButtonCaption("Select and upload file");
@@ -96,9 +99,11 @@ public class UploadImageView extends VerticalLayout implements PopupWindowView {
 
     private static class ImageUploadReceiver implements Upload.Receiver {
         private final SystemParamsService systemParamsService;
+        private final PanoramaService panoramaService;
 
-        private ImageUploadReceiver(SystemParamsService systemParamsService) {
+        private ImageUploadReceiver(PanoramaService panoramaService, SystemParamsService systemParamsService) {
             this.systemParamsService = systemParamsService;
+            this.panoramaService = panoramaService;
         }
 
         @Override
@@ -115,6 +120,7 @@ public class UploadImageView extends VerticalLayout implements PopupWindowView {
                     .map(uploadPath -> {
                         File file = new File(uploadPath + filename);
                         try {
+                            panoramaService.newPanorama(file.getPath());
                             return new FileOutputStream(file);
                         } catch (FileNotFoundException e) {
                             throw new IllegalStateException("upload failed");

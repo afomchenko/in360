@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.in360.db.model.Image;
 import ru.in360.db.model.Panorama;
 import ru.in360.db.model.Tour;
 import ru.in360.db.repo.ImageLevelRepo;
@@ -68,6 +69,17 @@ public class PanoramaServiceImpl implements PanoramaService {
     @Override
     public Optional<Tour> findTourByName(String name) {
         return tourRepo.findByName(name);
+    }
+
+    @Override
+    @Transactional
+    public Panorama newPanorama(String sourceImagePath) {
+        Panorama panorama = new Panorama();
+        Image image = new Image();
+        image.setSourceImagePath(sourceImagePath);
+        imageRepo.save(image);
+        panorama.setImage(image);
+        return savePanorama(panorama);
     }
 
     @Override
