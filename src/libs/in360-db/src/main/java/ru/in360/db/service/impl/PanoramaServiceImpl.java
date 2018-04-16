@@ -22,11 +22,17 @@ import ru.in360.db.repo.PanoramaRepo;
 import ru.in360.db.repo.TourRepo;
 import ru.in360.db.service.PanoramaService;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class PanoramaServiceImpl implements PanoramaService {
+
+    private final String IMAGETYPE_CUBE = "CUBE";
 
     private final ImageRepo imageRepo;
     private final PanoramaRepo panoramaRepo;
@@ -75,7 +81,9 @@ public class PanoramaServiceImpl implements PanoramaService {
     @Transactional
     public Panorama newPanorama(String sourceImagePath) {
         Panorama panorama = new Panorama();
+        panorama.setName("new panorama " + DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).withZone(ZoneId.systemDefault()).format(Instant.now()));
         Image image = new Image();
+        image.setType(IMAGETYPE_CUBE);
         image.setSourceImagePath(sourceImagePath);
         imageRepo.save(image);
         panorama.setImage(image);

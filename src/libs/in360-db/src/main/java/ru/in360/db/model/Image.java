@@ -18,9 +18,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
@@ -58,10 +56,6 @@ public class Image {
     @LazyCollection(LazyCollectionOption.FALSE)
     @OrderBy("width ASC")
     private Set<ImageLevel> mobileLevels;
-
-    @OneToOne()
-    @PrimaryKeyJoinColumn
-    private Panorama panorama;
 
     @Column(name = "sourceimage")
     private String sourceImagePath;
@@ -125,14 +119,6 @@ public class Image {
             this.mobileLevels = new LinkedHashSet<>();
         }
         this.mobileLevels.addAll(mobileLevels);
-    }
-
-    public Panorama getPanorama() {
-        return panorama;
-    }
-
-    public void setPanorama(Panorama panorama) {
-        this.panorama = panorama;
     }
 
     public String getSourceImagePath() {

@@ -14,7 +14,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -58,7 +60,9 @@ public class Panorama {
     @Size(max = 40)
     private String limitview;
 
-    @OneToOne(mappedBy = "panorama", cascade = CascadeType.ALL, orphanRemoval = true)
+    @MapsId
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "image")
     private Image image;
 
     @Column(name = "preview_url")
